@@ -1,0 +1,5 @@
+#!/bin/bash
+
+killall node
+npm install
+npx y-websocket & npm run dev
