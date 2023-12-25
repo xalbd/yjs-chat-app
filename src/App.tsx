@@ -8,24 +8,44 @@ function App() {
   const state = useSyncedStore(store);
   const [message, setMessage] = React.useState("");
   const [name, setName] = React.useState("Placeholder");
+  const [typingMessages, setTypingMessages] = React.useState<
+    Array<{ clientID: number; message: string }>
+  >([]);
 
   useEffect(() => {
     // Set placeholder name on initial load (new client connected)
     state.name[clientID] = name;
   }, []);
 
+  // Update React state whenever messages being typed change
+  awareness.on("change", () => {
+    setTypingMessages(
+      Array.from(awareness.getStates())
+        .map(([clientID, state]) => {
+          return {
+            clientID,
+            message: state.message,
+          };
+        })
+        .filter((x) => {
+          return x.message.length > 0;
+        })
+    );
+  });
+
   return (
     <div>
-      <p>Messages:</p>
+      <h3>Messages:</h3>
       {state.messages.map((message) => {
-        return (
-          <>
-            <p>{`${state.name[message.clientID]} ${message.content}`}</p>
-          </>
-        );
+        return <p>{`${state.name[message.clientID]} ${message.content}`}</p>;
       })}
 
-      <p>Message</p>
+      <h3>Typing:</h3>
+      {typingMessages.map((x) => {
+        return <p>{`${state.name[x.clientID]} ${x.message}`}</p>;
+      })}
+
+      <h3>Message</h3>
       <form
         onSubmit={(event) => {
           event.preventDefault();
@@ -34,6 +54,7 @@ function App() {
             clientID,
           });
           setMessage("");
+          awareness.setLocalStateField("message", "");
         }}
       >
         <input
@@ -47,7 +68,7 @@ function App() {
         />
       </form>
 
-      <p>Name (Current: {state.name[clientID]})</p>
+      <h3>Name (Current: {state.name[clientID]})</h3>
       <form
         onSubmit={(event) => {
           event.preventDefault();
