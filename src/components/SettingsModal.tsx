@@ -17,7 +17,7 @@ function SettingsModal({ isOpen, closeModal }: SettingsModalProps) {
     <Modal
       isOpen={isOpen}
       onRequestClose={closeModal}
-      className="outline-none max-w-lg h-screen flex m-auto items-center justify-center"
+      className="outline-none max-w-lg absolute top-1/2 left-1/2 -translate-x-1/2	-translate-y-1/2"
       shouldReturnFocusAfterClose={false}
     >
       <div className="min-w-0 p-4 m-4 border border-black rounded-lg flex-1">
@@ -34,6 +34,8 @@ function SettingsModal({ isOpen, closeModal }: SettingsModalProps) {
         <form
           onSubmit={(event) => {
             event.preventDefault();
+            if (name.length === 0) return;
+
             state.name[awareness.clientID] = name;
             setName("");
           }}
@@ -42,7 +44,7 @@ function SettingsModal({ isOpen, closeModal }: SettingsModalProps) {
           <label htmlFor="username" className="pb-1">
             Set Username:
           </label>
-          <div className="flex flex-row ">
+          <div className="flex flex-row">
             <input
               className="flex-1 min-w-0 px-3 py-1 rounded-lg outline outline-1"
               type="text"
