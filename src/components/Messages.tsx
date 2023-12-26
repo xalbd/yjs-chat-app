@@ -35,31 +35,34 @@ function Messages() {
   }
 
   return (
-    <div className="flex flex-col">
-      {state.messages.map((message, index) =>
-        awareness.clientID === message.clientID ? (
-          <SentMessage
-            message={message.content}
-            tag={getTimeString(message.time)}
+    <div className="overflow-auto flex flex-col-reverse pb-2">
+      {/* Nested div ensures proper scrolling behavior */}
+      <div>
+        {state.messages.map((message, index) =>
+          awareness.clientID === message.clientID ? (
+            <SentMessage
+              message={message.content}
+              tag={getTimeString(message.time)}
+              key={index}
+            />
+          ) : (
+            <ReceivedMessage
+              message={message.content}
+              tag={`${state.name[message.clientID] ?? "N/A"}, ${getTimeString(
+                message.time
+              )}`}
+              key={index}
+            />
+          )
+        )}
+        {typingMessages.map((message, index) => (
+          <TypingMessage
+            message={message.message}
+            tag={state.name[message.clientID] ?? ""}
             key={index}
           />
-        ) : (
-          <ReceivedMessage
-            message={message.content}
-            tag={`${state.name[message.clientID] ?? "N/A"}, ${getTimeString(
-              message.time
-            )}`}
-            key={index}
-          />
-        )
-      )}
-      {typingMessages.map((message, index) => (
-        <TypingMessage
-          message={message.message}
-          tag={state.name[message.clientID] ?? ""}
-          key={index}
-        />
-      ))}
+        ))}
+      </div>
     </div>
   );
 }
