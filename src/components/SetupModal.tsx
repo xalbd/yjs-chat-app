@@ -11,7 +11,7 @@ function SetupModal({ isOpen, closeModal }: ModalProps) {
   return (
     <Modal
       isOpen={isOpen}
-      className="w-screen h-screen flex justify-center items-center"
+      className="w-dvh h-dvh flex justify-center items-center"
       overlayClassName="fixed inset-0 bg-white/90"
       shouldReturnFocusAfterClose={false}
     >

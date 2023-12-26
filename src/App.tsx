@@ -10,7 +10,7 @@ function App() {
   const [settingsOpen, setSettingsOpen] = React.useState(false);
 
   return (
-    <div className="max-w-screen-sm h-screen mx-auto flex flex-col">
+    <div className="max-w-screen-sm h-dvh mx-auto flex flex-col">
       <Header openSettings={() => setSettingsOpen(true)} />
       <Messages />
       <InputBox />

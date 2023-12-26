@@ -35,7 +35,7 @@ function Messages() {
   }
 
   return (
-    <div className="overflow-auto flex flex-col-reverse pb-2 border-x border-black">
+    <div className="overflow-auto flex flex-col-reverse pb-2 border-x border-black h-full">
       {/* Nested div ensures proper scrolling behavior */}
       <div>
         {state.messages.map((message, index) =>
