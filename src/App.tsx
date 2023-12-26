@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSyncedStore } from "@syncedstore/react";
 import { store, awareness } from "./store";
+import Messages from "./components/Messages";
 
 function App() {
   const clientID = awareness.clientID;
@@ -8,42 +9,15 @@ function App() {
   const state = useSyncedStore(store);
   const [message, setMessage] = React.useState("");
   const [name, setName] = React.useState("Placeholder");
-  const [typingMessages, setTypingMessages] = React.useState<
-    Array<{ clientID: number; message: string }>
-  >([]);
 
   useEffect(() => {
     // Set placeholder name on initial load (new client connected)
     state.name[clientID] = name;
   }, []);
 
-  // Update React state whenever messages being typed change
-  awareness.on("change", () => {
-    setTypingMessages(
-      Array.from(awareness.getStates())
-        .map(([clientID, state]) => {
-          return {
-            clientID,
-            message: state.message,
-          };
-        })
-        .filter((x) => {
-          return x.message.length > 0;
-        })
-    );
-  });
-
   return (
-    <div>
-      <h3>Messages:</h3>
-      {state.messages.map((message) => {
-        return <p>{`${state.name[message.clientID]} ${message.content}`}</p>;
-      })}
-
-      <h3>Typing:</h3>
-      {typingMessages.map((x) => {
-        return <p>{`${state.name[x.clientID]} ${x.message}`}</p>;
-      })}
+    <div className="max-w-xl mx-auto outline">
+      <Messages />
 
       <h3>Message</h3>
       <form
@@ -52,6 +26,7 @@ function App() {
           state.messages.push({
             content: message,
             clientID,
+            time: Date.now(),
           });
           setMessage("");
           awareness.setLocalStateField("message", "");
@@ -59,6 +34,7 @@ function App() {
       >
         <input
           type="text"
+          className="outline"
           value={message}
           onChange={(event) => {
             const currentMessage = event.target.value;
@@ -77,6 +53,7 @@ function App() {
         }}
       >
         <input
+          className="outline"
           type="text"
           value={name}
           onChange={(event) => {

@@ -1,7 +1,7 @@
 import { syncedStore, getYjsDoc } from "@syncedstore/core";
 import { WebsocketProvider } from "y-websocket";
 
-type Message = { content: string; clientID: number };
+type Message = { content: string; clientID: number; time: number };
 type Name = { [key: number]: string };
 
 // Main Y.js document stores all messages/associated client IDs as well as map between client ID -> selected name
