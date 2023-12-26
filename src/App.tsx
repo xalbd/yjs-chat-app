@@ -1,19 +1,13 @@
-import React, { useEffect } from "react";
-import { useSyncedStore } from "@syncedstore/react";
-import { store, awareness } from "./store";
+import React from "react";
 import Messages from "./components/Messages";
 import Header from "./components/Header";
 import InputBox from "./components/InputBox";
 import SettingsModal from "./components/SettingsModal";
+import SetupModal from "./components/SetupModal";
 
 function App() {
-  const state = useSyncedStore(store);
+  const [setupComplete, setSetupComplete] = React.useState(false);
   const [settingsOpen, setSettingsOpen] = React.useState(false);
-
-  useEffect(() => {
-    // Set placeholder name on initial load (new client connected)
-    state.name[awareness.clientID] = "Placeholder";
-  }, []);
 
   return (
     <>
@@ -25,11 +19,11 @@ function App() {
           isOpen={settingsOpen}
           closeModal={() => setSettingsOpen(false)}
         />
+        <SetupModal
+          isOpen={!setupComplete}
+          closeModal={() => setSetupComplete(true)}
+        />
       </div>
-      <SettingsModal
-        isOpen={settingsOpen}
-        closeModal={() => setSettingsOpen(false)}
-      />
     </>
   );
 }
