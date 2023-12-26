@@ -4,42 +4,33 @@ import { store, awareness } from "./store";
 import Messages from "./components/Messages";
 import Header from "./components/Header";
 import InputBox from "./components/InputBox";
+import SettingsModal from "./components/SettingsModal";
 
 function App() {
-  const clientID = awareness.clientID;
-
   const state = useSyncedStore(store);
-  const [name, setName] = React.useState("Placeholder");
+  const [settingsOpen, setSettingsOpen] = React.useState(false);
 
   useEffect(() => {
     // Set placeholder name on initial load (new client connected)
-    state.name[clientID] = name;
+    state.name[awareness.clientID] = "Placeholder";
   }, []);
 
   return (
-    <div className="max-w-screen-sm h-screen mx-auto outline flex flex-col">
-      <Header />
-      <Messages />
-      <InputBox />
-
-      <h3>Name (Current: {state.name[clientID]})</h3>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          state.name[clientID] = name;
-          setName("");
-        }}
-      >
-        <input
-          className="outline"
-          type="text"
-          value={name}
-          onChange={(event) => {
-            setName(event.target.value);
-          }}
+    <>
+      <div className="max-w-screen-sm h-screen mx-auto flex flex-col">
+        <Header openSettings={() => setSettingsOpen(true)} />
+        <Messages />
+        <InputBox />
+        <SettingsModal
+          isOpen={settingsOpen}
+          closeModal={() => setSettingsOpen(false)}
         />
-      </form>
-    </div>
+      </div>
+      <SettingsModal
+        isOpen={settingsOpen}
+        closeModal={() => setSettingsOpen(false)}
+      />
+    </>
   );
 }
 

@@ -24,7 +24,7 @@ function InputBox() {
   }
 
   return (
-    <div className="outline flex flex-row px-4 py-2">
+    <div className="border border-black flex flex-row px-4 py-2">
       <form
         className="flex flex-1 min-w-0"
         onSubmit={(event) => {
@@ -33,15 +33,15 @@ function InputBox() {
         }}
       >
         <input
-          className="flex-1 min-w-0 px-3 py-2 mr-4 rounded-2xl outline"
+          className="flex-1 min-w-0 px-3 py-2 mr-4 rounded-2xl outline outline-1"
           type="text"
           value={message}
           onChange={(event) => {
             updateMessage(event.target.value);
           }}
         />
-        <button className="p-2 rounded-full outline self-center">
-          <Send className="" />
+        <button className="p-2 rounded-full outline outline-1">
+          <Send className="stroke-1" />
         </button>
       </form>
     </div>

@@ -35,7 +35,7 @@ function Messages() {
   }
 
   return (
-    <div className="overflow-auto flex flex-col-reverse pb-2">
+    <div className="overflow-auto flex flex-col-reverse pb-2 border-x border-black">
       {/* Nested div ensures proper scrolling behavior */}
       <div>
         {state.messages.map((message, index) =>
@@ -55,11 +55,11 @@ function Messages() {
             />
           )
         )}
-        {typingMessages.map((message, index) => (
+        {typingMessages.map((message) => (
           <TypingMessage
             message={message.message}
             tag={state.name[message.clientID] ?? ""}
-            key={index}
+            key={message.clientID}
           />
         ))}
       </div>
