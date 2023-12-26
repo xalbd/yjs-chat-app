@@ -10,21 +10,19 @@ function App() {
   const [settingsOpen, setSettingsOpen] = React.useState(false);
 
   return (
-    <>
-      <div className="max-w-screen-sm h-screen mx-auto flex flex-col">
-        <Header openSettings={() => setSettingsOpen(true)} />
-        <Messages />
-        <InputBox />
-        <SettingsModal
-          isOpen={settingsOpen}
-          closeModal={() => setSettingsOpen(false)}
-        />
-        <SetupModal
-          isOpen={!setupComplete}
-          closeModal={() => setSetupComplete(true)}
-        />
-      </div>
-    </>
+    <div className="max-w-screen-sm h-screen mx-auto flex flex-col">
+      <Header openSettings={() => setSettingsOpen(true)} />
+      <Messages />
+      <InputBox />
+      <SettingsModal
+        isOpen={settingsOpen}
+        closeModal={() => setSettingsOpen(false)}
+      />
+      <SetupModal
+        isOpen={!setupComplete}
+        closeModal={() => setSetupComplete(true)}
+      />
+    </div>
   );
 }
 

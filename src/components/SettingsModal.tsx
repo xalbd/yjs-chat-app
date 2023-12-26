@@ -13,10 +13,11 @@ function SettingsModal({ isOpen, closeModal }: ModalProps) {
     <Modal
       isOpen={isOpen}
       onRequestClose={closeModal}
-      className="outline-none max-w-lg absolute top-1/2 left-1/2 -translate-x-1/2	-translate-y-1/2"
+      className="w-screen h-screen flex justify-center items-center"
+      overlayClassName="fixed inset-0 bg-white/90"
       shouldReturnFocusAfterClose={false}
     >
-      <div className="min-w-0 p-4 m-4 border border-black rounded-lg flex-1">
+      <div className="min-w-0 max-w-lg p-4 m-4 border border-black rounded-lg flex-1">
         <div className="flex flex-row items-center">
           <h1 className="font-medium text-2xl flex-1">Settings</h1>
           <button className="rounded-full" onClick={closeModal}>
